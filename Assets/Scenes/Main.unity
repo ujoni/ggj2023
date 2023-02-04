@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 699160874}
   - component: {fileID: 699160873}
   - component: {fileID: 699160872}
+  - component: {fileID: 699160875}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -322,6 +323,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 47792120089d2054d8c0be7b042680e1, type: 3}
+--- !u!114 &699160875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699160870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9591d99fd7df4541aad0b81b43351f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &810621652
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +394,7 @@ GameObject:
   - component: {fileID: 1057426406}
   - component: {fileID: 1057426405}
   - component: {fileID: 1057426404}
+  - component: {fileID: 1057426407}
   m_Layer: 0
   m_Name: Skull
   m_TagString: Untagged
@@ -485,6 +499,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 47792120089d2054d8c0be7b042680e1, type: 3}
+--- !u!114 &1057426407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057426402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f3331110474eb40aaaf9f1f11e3ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1307502287
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +523,7 @@ GameObject:
   - component: {fileID: 1307502291}
   - component: {fileID: 1307502290}
   - component: {fileID: 1307502289}
+  - component: {fileID: 1307502292}
   m_Layer: 0
   m_Name: Face
   m_TagString: Untagged
@@ -600,6 +627,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 47792120089d2054d8c0be7b042680e1, type: 3}
+--- !u!114 &1307502292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307502287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ef74f2d60ab594e8289e8361cd79f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1942968386
 GameObject:
   m_ObjectHideFlags: 0

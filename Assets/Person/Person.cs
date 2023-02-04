@@ -21,7 +21,7 @@ public class Person : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Return))
         {
-
+            this.SetDNA(new DNA(new()));
         }
     }
 
