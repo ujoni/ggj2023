@@ -332,4 +332,30 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 21300000, guid: a133a6c38cc601d4b97095e1732143c8, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 1
+  - m_Name: Backgrounds
+    m_Hash: 910522780
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Entry
+      m_Hash: 719368820
+      m_Sprite: {fileID: 21300000, guid: edb098d7b846cf249aae15e9a16ce890, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: edb098d7b846cf249aae15e9a16ce890, type: 3}
+    - m_Name: Entry_0
+      m_Hash: 874506106
+      m_Sprite: {fileID: 21300000, guid: 975d55547901cbd4cb473465e053418a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 975d55547901cbd4cb473465e053418a, type: 3}
+    - m_Name: Entry_1
+      m_Hash: 51959788
+      m_Sprite: {fileID: 21300000, guid: f69e5f00725d71243b67f8468a3e02e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: f69e5f00725d71243b67f8468a3e02e3, type: 3}
+    - m_Name: Entry_2
+      m_Hash: 437356118
+      m_Sprite: {fileID: 21300000, guid: 931751c2e5b9f104682accbc8f1ef52a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 931751c2e5b9f104682accbc8f1ef52a, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
   m_PrimaryLibraryGUID: 
