@@ -5,6 +5,10 @@ using static GeneData;
 
 public static class DNAFactory
 {
+
+    // rareGeneThreshold
+    // 0: includes all genes
+    // 1: includes only required genes
     public static DNA CreateDNA(float rareGeneThreshold, bool randomize = false)
     {
         List<GeneCategory> selectedGenes = new();
@@ -22,13 +26,13 @@ public static class DNAFactory
         return new(selectedGenes.Select(cat => DNAFactory.CreateGeneFromCategory(cat)));
     }
 
-    public static Gene CreateGeneFromCategory(GeneCategory category)
+    private static Gene CreateGeneFromCategory(GeneCategory category)
     {
         var allele = DNAFactory.CreateAlleleFromCategory(category);
         return new Gene(category, allele);
     }
 
-    public static GeneAllele CreateAlleleFromCategory(GeneCategory category)
+    private static GeneAllele CreateAlleleFromCategory(GeneCategory category)
     {
         var alleleChars = Alleles[category].ToCharArray();
         var len = alleleChars.Length;
