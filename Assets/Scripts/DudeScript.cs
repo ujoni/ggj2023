@@ -50,7 +50,8 @@ public class DudeScript : MonoBehaviour
 
     // public int primaryparent; now just first is always primary
     // space requirements, what distance on each side do we need
-    public List<float> req;
+    public List<float> reql;
+    public List<float> reqr;
 
     bool initialized;
 
@@ -105,15 +106,15 @@ public class DudeScript : MonoBehaviour
         }
     }
 
-    void FixPrimary()
+    public void FixPrimary()
     {
-        print("fixing " + id.ToString());
+        //print("fixing " + id.ToString());
         if (parents.Count > 0)
         {
-            if (id == 33) print("now fix");
+            //if (id == 33) print("now fix");
             // parent is not orphan
             bool pphas = !parents[0].GetComponent<DudeScript>().IsOrphan(); // parents[0].GetComponent<DudeScript>().parents.Count > 0;
-            if (id == 33) print(pphas);
+            //if (id == 33) print(pphas);
             //if (id == 5) print(pphas);
             //if (id == 5) print(parents[1 - primaryparent].GetComponent<DudeScript>().parents.Count > 0);
             //if (id == 5) print(parents[primaryparent].GetComponent<DudeScript>().id);
