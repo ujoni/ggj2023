@@ -314,8 +314,13 @@ MonoBehaviour:
       m_Sprite: {fileID: 21300000, guid: dbb2e6a47e3339945be1eca6dc4a0f6d, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 21300000, guid: dbb2e6a47e3339945be1eca6dc4a0f6d, type: 3}
+    - m_Name: 18
+      m_Hash: 797355475
+      m_Sprite: {fileID: 21300000, guid: 36e44d7ecb7d63c4baee1b192ec43628, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 36e44d7ecb7d63c4baee1b192ec43628, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 17
+    m_EntryOverrideCount: 18
   - m_Name: Frames
     m_Hash: 969051148
     m_CategoryList: []
