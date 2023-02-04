@@ -7,15 +7,9 @@ using System.Net.Http.Headers;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Build.Player;
 using UnityEngine;
-
-public enum GeneCategory
-{
-    Smarts,
-    Looks,
-    Psyche,
-    Body,
-}
+using static GeneData;
 
 public class GeneAllele
 {
@@ -149,23 +143,14 @@ public class GeneAllele
 
 public class Gene
 {
-    public static readonly Dictionary<GeneCategory, string> alleles = new(){
-        {GeneCategory.Smarts, "ABc"},
-        {GeneCategory.Looks, "Ab"},
-        {GeneCategory.Psyche, "AB"},
-        {GeneCategory.Body, "ABcd"},
+    public readonly GeneCategory geneCategory;
+    public readonly GeneAllele allele;
 
-    };
-
-    public static readonly Dictionary<GeneCategory, float> probabilityToInherit = new(){
-        {GeneCategory.Smarts, 1f},
-        {GeneCategory.Looks, 1f},
-        {GeneCategory.Psyche, 1f},
-        {GeneCategory.Body, 1f},
-    };
-
-    public GeneCategory geneCategory;
-    public GeneAllele allele;
+    public Gene(GeneCategory category, GeneAllele allele)
+    {
+        this.geneCategory = category;
+        this.allele = allele;
+    }
 
     public string GetPhenotype()
     {
@@ -179,35 +164,25 @@ public class Gene
         {
             var combinations = one.allele.GetCombinations(two.allele);
             var allele = combinations[UnityEngine.Random.Range(0, combinations.Count)];
-            var gene = new Gene
-            {
-                geneCategory = one.geneCategory,
-                allele = allele
-            };
+            var gene = new Gene(one.geneCategory, allele);
+
+
             return gene;
         }
         if (one != null)
         {
-            return new Gene
-            {
-                geneCategory = one.geneCategory,
-                allele = new GeneAllele(one.allele),
-            };
+            return new Gene(one.geneCategory, new GeneAllele(one.allele));
         }
         if (two != null)
         {
-            return new Gene
-            {
-                geneCategory = two.geneCategory,
-                allele = new GeneAllele(two.allele),
-            };
+            return new Gene(two.geneCategory, new GeneAllele(two.allele));
         }
         return null;
     }
 
     public static bool DoesInherit(GeneCategory category)
     {
-        return UnityEngine.Random.Range(0f, 1f) < Gene.probabilityToInherit[category];
+        return UnityEngine.Random.Range(0f, 1f) < ProbabilityToInherit[category];
     }
 
     public void Mutate()
@@ -234,11 +209,11 @@ public class DNA
     // artifical tracker for figuting out whether bad mutations should occure
     private readonly Dictionary<string, int> inbreedingChart;
 
-    public DNA(List<Gene> genes) : this(genes, null) { }
+    public DNA(IEnumerable<Gene> genes) : this(genes, null) { }
 
-    public DNA(List<Gene> genes, Dictionary<string, int> inbreeding)
+    public DNA(IEnumerable<Gene> genes, Dictionary<string, int> inbreeding)
     {
-        this.genes = genes;
+        this.genes = new(genes);
         if (inbreeding != null)
         {
             this.inbreedingChart = inbreeding;
