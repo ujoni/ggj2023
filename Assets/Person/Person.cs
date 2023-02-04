@@ -5,9 +5,11 @@ public class Person : MonoBehaviour
     private DNA dna;
     private DNAResolver[] dnaResolvers;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         this.dnaResolvers = this.GetComponentsInChildren<DNAResolver>();
+        this.SetDNA(DNAFactory.CreateDNA(0)); // maybe?
+
     }
 
     // Update is called once per frame

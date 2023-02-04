@@ -65,6 +65,18 @@ public class TreeScript : MonoBehaviour
             gho.GetComponent<DudeScript>().id = running++; 
             DudeScript dud = gho.GetComponent<DudeScript>();
             dud.parents = new List<GameObject> { chosen.gameObject, d.gameObject };
+
+            DNA A = chosen.GetComponent<Person>().GetDNA();
+            print(A);
+            print("kili");
+            DNA B = d.GetComponent<Person>().GetDNA();
+            print(B);
+            print("kildi");
+            print(dud.GetComponent<Person>());
+            print(A.Combine(B));
+            print("www");
+            dud.GetComponent<Person>().SetDNA(A.Combine(B));
+            print("ok");
             dud.Initialize();
             dud.InformParents();
             LayOut();
@@ -140,6 +152,26 @@ public class TreeScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             LayOut();
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            /*if (chosen == null || d == null) return;
+            if (d.ghost) return;
+            if (chosen == d) return;
+            GameObject gho = GameObject.Instantiate(ghost);
+            gho.transform.position = chosen.transform.position;
+            gho.GetComponent<DudeScript>().id = running++;
+            DudeScript dud = gho.GetComponent<DudeScript>();
+            dud.parents = new List<GameObject> { chosen.gameObject, d.gameObject };
+
+            DNA A = chosen.GetComponent<Person>().GetDNA();
+            DNA B = d.GetComponent<Person>().GetDNA();
+            dud.GetComponent<Person>().SetDNA(A.Combine(B));
+
+            dud.Initialize();
+            dud.InformParents();
+            LayOut();*/
         }
     }
 
