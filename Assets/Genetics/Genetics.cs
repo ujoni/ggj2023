@@ -158,7 +158,8 @@ public class Gene
         return this.allele.GetPhenotype();
     }
 
-    public bool IsDead() {
+    public bool IsDead()
+    {
         return this.allele.IsDeadGeneAllele();
     }
 
@@ -185,13 +186,15 @@ public class Gene
         return null;
     }
 
-    public int GetPhenotypeIndex() {
+    public int GetPhenotypeIndex()
+    {
         var phenotype = this.allele.GetPhenotype();
         var allPhenos = GeneAllele.GetAllPhenotypes(Alleles[this.geneCategory]);
         return allPhenos.FindIndex(val => val == phenotype);
     }
 
-    public int GetPhenotypeCount() {
+    public int GetPhenotypeCount()
+    {
         return GeneAllele.GetAllPhenotypes(Alleles[this.geneCategory]).Count;
     }
 
@@ -239,6 +242,13 @@ public class DNA
     public Gene GetGeneByCategory(GeneCategory cat)
     {
         return this.genes.Find(gene => gene.geneCategory == cat);
+    }
+
+    public bool IsViable()
+    {
+        return !this.GetGeneByCategory(GeneCategory.R_Logic_5).IsDead()
+            && !this.GetGeneByCategory(GeneCategory.R_Empathy_2).IsDead()
+            && !this.GetGeneByCategory(GeneCategory.R_Physique_5).IsDead();
     }
 
     public DNA Combine(DNA other)

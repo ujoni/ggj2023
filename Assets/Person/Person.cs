@@ -26,8 +26,11 @@ public class Person : MonoBehaviour
 
     public void SetDNA(DNA dna)
     {
-        this.dna = dna;
         Debug.Log(dna);
+        if (!dna.IsViable()) {
+            throw new System.Exception("This fellow is dead, yo!");
+        }
+        this.dna = dna;
         foreach (var resolver in this.dnaResolvers)
         {
             resolver.SetDNA(dna);
