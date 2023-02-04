@@ -291,4 +291,11 @@ public class DNA
         newDict.Add(dna2.id, 1);
         return newDict;
     }
+
+    internal string GetPhenotypeByCategory(GeneCategory category)
+    {
+        var gene = this.GetGeneByCategory(category);
+        if (gene == null) return null;
+        return gene.GetPhenotype();
+    }
 }
