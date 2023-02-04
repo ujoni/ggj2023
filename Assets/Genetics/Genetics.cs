@@ -1,13 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Headers;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Build.Player;
 using UnityEngine;
 using static GeneData;
 
