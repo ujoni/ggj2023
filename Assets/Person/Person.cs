@@ -2,21 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class Person : MonoBehaviour
 {
     private DNA dna;
+    private DNAResolver[] dnaResolvers;
     // Start is called before the first frame update
     void Start()
     {
-
+        this.dnaResolvers = this.GetComponentsInChildren<DNAResolver>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Return))
+        {
 
+        }
     }
 
     public DNA GetDNA()
@@ -27,34 +33,9 @@ public class Person : MonoBehaviour
     public void SetDNA(DNA dna)
     {
         this.dna = dna;
-        this.CreateCharacter();
-    }
-
-    private void CreateCharacter()
-    {
-        this.CreateFrame();
-        this.CreateBody();
-        this.CreateHead();
-        this.CreateStats();
-    }
-
-    private void CreateStats()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void CreateHead()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void CreateBody()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void CreateFrame()
-    {
-        throw new NotImplementedException();
+        foreach (var resolver in this.dnaResolvers)
+        {
+            resolver.SetDNA(dna);
+        }
     }
 }
