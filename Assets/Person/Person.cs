@@ -27,6 +27,7 @@ public class Person : MonoBehaviour
     public void SetDNA(DNA dna)
     {
         this.dna = dna;
+        Debug.Log(dna);
         foreach (var resolver in this.dnaResolvers)
         {
             resolver.SetDNA(dna);

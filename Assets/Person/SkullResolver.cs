@@ -1,9 +1,10 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class SkullResolver : DNAResolver
 {
     protected override int SelectComponent(DNA dna, int count)
     {
-        return Random.Range(0, count);
+        return BodyFactory.GetSkullIndex(dna, count);
     }
 }

@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using TMPro;
+using TMPro.SpriteAssetUtilities;
+using UnityEditor.MPE;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static GeneData;
 
 public class GeneAllele
@@ -26,37 +32,7 @@ public class GeneAllele
     // Always upper-case
     public string GetPhenotype()
     {
-        string pheno = "";
-        for (int i = 0; i < GeneAllele.ALLELE_LEN; i++)
-        {
-            char al = this.alleleChars[i];
-            if (this.IsDominant(al))
-            {
-                pheno += al;
-            }
-        }
-
-        // we have only recessive alleles
-        if (pheno.Length == 0)
-        {
-            // we have aa or bb, which are represented by A or B
-            // xx is represented as X 
-            if (this.HasTwoOfTheSame()) return ("" + this.alleleChars[0]).ToUpper();
-            // ab is represented as AB. if ax, then A (mutation is removed)
-            return this.GetAlleleWithoutMutation().ToUpper();
-        }
-
-        // we have only one dominant allele
-        if (pheno.Length == 1) return pheno;
-
-        // we have something like AA or BB
-        if (pheno.Length == 2 && this.HasTwoOfTheSame())
-        {
-            return "" + this.alleleChars[0];
-        }
-
-        // our dominants format a perfect phenotype
-        return pheno;
+        return GeneAllele.GetPhenotypeFromPair(this.alleleChars[0], this.alleleChars[1]);
     }
 
     public List<GeneAllele> GetCombinations(GeneAllele other)
@@ -119,17 +95,50 @@ public class GeneAllele
         return Char.IsUpper(al);
     }
 
-    private bool HasTwoOfTheSame()
+    public static List<String> GetAllPhenotypes(string alleles)
     {
-        return this.alleleChars[0] == this.alleleChars[1];
+        var arr = alleles.ToCharArray();
+        List<string> phenotypes = new();
+        foreach (char a in arr)
+        {
+            foreach (char b in arr)
+            {
+                phenotypes.Add(GeneAllele.GetPhenotypeFromPair(a, b));
+            }
+        }
+        return phenotypes;
     }
 
-    private string GetAlleleWithoutMutation()
+    private static string GetPhenotypeFromPair(char a, char b)
     {
-        string allele = "";
-        if (this.alleleChars[0] != GeneAllele.MUTATION_MARKER) allele += this.alleleChars[0];
-        if (this.alleleChars[1] != GeneAllele.MUTATION_MARKER) allele += this.alleleChars[1];
-        return allele;
+        string pheno = "";
+        if (Char.ToUpper(a) == a) pheno += a;
+        if (Char.ToUpper(b) == b) pheno += b;
+
+        // we have only recessive alleles
+        if (pheno.Length == 0)
+        {
+            // we have aa or bb, which are represented by A or B
+            // xx is represented as X 
+            if (a == b) return "" + Char.ToUpper(a);
+            // ab is represented as AB. if ax, then A (mutation is removed)
+            string ret = "";
+            if (a != GeneAllele.MUTATION_MARKER) ret += a;
+            if (b != GeneAllele.MUTATION_MARKER) ret += b;
+            return ret.ToUpper();
+        }
+
+        // we have only one dominant allele
+        if (pheno.Length == 1) return pheno;
+
+        // we have something like AA or BB
+        if (pheno.Length == 2 && a == b)
+        {
+            return "" + a;
+        }
+
+        // our dominants format a perfect phenotype
+        return pheno;
     }
 }
 
@@ -170,6 +179,16 @@ public class Gene
             return new Gene(two.geneCategory, new GeneAllele(two.allele));
         }
         return null;
+    }
+
+    public int GetPhenotypeIndex() {
+        var phenotype = this.allele.GetPhenotype();
+        var allPhenos = GeneAllele.GetAllPhenotypes(Alleles[this.geneCategory]);
+        return allPhenos.FindIndex(val => val == phenotype);
+    }
+
+    public int GetPhenotypeCount() {
+        return GeneAllele.GetAllPhenotypes(Alleles[this.geneCategory]).Count;
     }
 
     public static bool DoesInherit(GeneCategory category)
@@ -292,10 +311,15 @@ public class DNA
         return newDict;
     }
 
-    internal string GetPhenotypeByCategory(GeneCategory category)
+    public string GetPhenotypeByCategory(GeneCategory category)
     {
         var gene = this.GetGeneByCategory(category);
         if (gene == null) return null;
         return gene.GetPhenotype();
+    }
+
+    public override string ToString()
+    {
+        return this.genes.Select(gene => gene.GetPhenotype()).Aggregate((whole, val) => whole + "-" + val);
     }
 }
