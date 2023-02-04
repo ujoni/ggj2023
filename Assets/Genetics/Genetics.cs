@@ -158,6 +158,10 @@ public class Gene
         return this.allele.GetPhenotype();
     }
 
+    public bool IsDead() {
+        return this.allele.IsDeadGeneAllele();
+    }
+
     // combines two genes and returns a combined gene
     public static Gene Combine(Gene one, Gene two)
     {
