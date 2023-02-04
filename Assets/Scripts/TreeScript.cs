@@ -59,13 +59,15 @@ public class TreeScript : MonoBehaviour
             if (chosen == null || d == null) return;
             if (d.ghost) return;
             if (chosen == d) return;
+            DNA A = chosen.GetComponent<Person>().GetDNA();
+
             GameObject gho = GameObject.Instantiate(ghost);
             gho.transform.position = chosen.transform.position;
-            gho.GetComponent<DudeScript>().id = running++; 
+            gho.GetComponent<DudeScript>().id = running++;
+            gho.GetComponent<Person>().SetDNA(A);
             DudeScript dud = gho.GetComponent<DudeScript>();
             dud.parents = new List<GameObject> { chosen.gameObject, d.gameObject };
 
-            DNA A = chosen.GetComponent<Person>().GetDNA();
             print(A);
             print("kili");
             DNA B = d.GetComponent<Person>().GetDNA();
