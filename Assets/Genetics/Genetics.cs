@@ -253,6 +253,7 @@ public class DNA
 
     public DNA Combine(DNA other)
     {
+        if (other == this) throw new Exception("Bad boi! This is me!");
         List<Gene> genes = new();
 
         foreach (GeneCategory cat in Enum.GetValues(typeof(GeneCategory)))
