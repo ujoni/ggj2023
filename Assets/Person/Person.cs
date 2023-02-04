@@ -8,7 +8,7 @@ public class Person : MonoBehaviour
     void Awake()
     {
         this.dnaResolvers = this.GetComponentsInChildren<DNAResolver>();
-        this.SetDNA(DNAFactory.CreateDNA(0)); // maybe?
+        //this.SetDNA(DNAFactory.CreateDNA(0)); // maybe?
 
     }
 
