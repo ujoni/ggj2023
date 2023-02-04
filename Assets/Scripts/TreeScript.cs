@@ -17,7 +17,7 @@ public class TreeScript : MonoBehaviour
     public const float SPOUSERIGHTING = 1;
     public const float CHILDSEPA = 1.5f;
 
-    DudeScript chosen;
+    
 
     private void Start()
     {
@@ -31,56 +31,7 @@ public class TreeScript : MonoBehaviour
         
     }
 
-    public void WasClicked(DudeScript d, int btn)
-    {
-        
-        // print(d.id);
-        // left button chooses
-        if (btn == 0)
-        {
-
-            if (d == null)
-            {
-                if (chosen != null)
-                {
-                    chosen.UnChoose();
-                    chosen = null;
-                }
-                return;
-            }
-            if (chosen != null && chosen != d){
-                chosen.UnChoose();
-                chosen = null;
-            }
-            if (d.Choose()) chosen = d;
-        }
-        if (btn == 1)
-        {
-            if (chosen == null || d == null) return;
-            if (d.ghost) return;
-            if (chosen == d) return;
-            GameObject gho = GameObject.Instantiate(ghost);
-            gho.transform.position = chosen.transform.position;
-            gho.GetComponent<DudeScript>().id = running++; 
-            DudeScript dud = gho.GetComponent<DudeScript>();
-            dud.parents = new List<GameObject> { chosen.gameObject, d.gameObject };
-
-            DNA A = chosen.GetComponent<Person>().GetDNA();
-            print(A);
-            print("kili");
-            DNA B = d.GetComponent<Person>().GetDNA();
-            print(B);
-            print("kildi");
-            print(dud.GetComponent<Person>());
-            print(A.Combine(B));
-            print("www");
-            dud.GetComponent<Person>().SetDNA(A.Combine(B));
-            print("ok");
-            dud.Initialize();
-            dud.InformParents();
-            LayOut();
-        }
-    }
+    
 
     public void LayOut()
     {

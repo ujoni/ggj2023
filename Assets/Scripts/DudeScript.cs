@@ -53,10 +53,12 @@ public class DudeScript : MonoBehaviour
     public List<float> reqr;
 
     bool initialized;
+    MouseListenerScript listener;
 
     public void Awake()
     {
         print("awak"); 
+
         Initialize();
         
     }
@@ -69,6 +71,7 @@ public class DudeScript : MonoBehaviour
     public void Initialize()
     {
         if (initialized) return;
+        listener = GameObject.Find("MouseListenerSorta").GetComponent<MouseListenerScript>();
         print("don");
         initialized = true;
 
@@ -140,11 +143,11 @@ public class DudeScript : MonoBehaviour
                     tree.LayOut();
                 }
             }
-            tree.WasClicked(this, 0);
+            listener.WasClicked(this, 0);
         }
         if (Input.GetMouseButtonDown(1))
         {
-            tree.WasClicked(this, 1);
+            listener.WasClicked(this, 1);
         }
     }
 
