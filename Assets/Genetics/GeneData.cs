@@ -18,10 +18,9 @@ public static class GeneData
         {GeneCategory.Emotions, "AB"},
         {GeneCategory.Body, "ABc"},
         {GeneCategory.Empathy, "ABcd"},
-        {GeneCategory.Musculature, ""},
-        {GeneCategory.Empathy, ""},
-        {GeneCategory.Attractiveness, ""},
-        {GeneCategory.Quirks, ""},
+        {GeneCategory.Musculature, "A"},
+        {GeneCategory.Attractiveness, "A"},
+        {GeneCategory.Quirks, "A"},
     };
 
     // value of 1 means that this gene is necessary for being a human, or something
@@ -33,7 +32,6 @@ public static class GeneData
         // additional genes
         {GeneCategory.Empathy, 0.75f},
         {GeneCategory.Musculature, 0.75f},
-        {GeneCategory.Empathy, 0.5f},
         {GeneCategory.Attractiveness, 0.5f},
         {GeneCategory.Quirks, 0.25f},
     };
