@@ -12,11 +12,11 @@ public class TreeScript : MonoBehaviour
 
     int running = 10;
 
-    const float FIRSTLEVEWIDADD = 0;
+    const float FIRSTLEVEWIDADD = 1;
     public const float DOWNADD = 4.5f;
     const float DUDELEFTING = 1;
     public const float SPOUSERIGHTING = 1;
-
+    public const float CHILDSEPA = 1.5f;
 
     DudeScript chosen;
 
@@ -65,6 +65,18 @@ public class TreeScript : MonoBehaviour
             gho.GetComponent<DudeScript>().id = running++; 
             DudeScript dud = gho.GetComponent<DudeScript>();
             dud.parents = new List<GameObject> { chosen.gameObject, d.gameObject };
+
+            DNA A = chosen.GetComponent<Person>().GetDNA();
+            print(A);
+            print("kili");
+            DNA B = d.GetComponent<Person>().GetDNA();
+            print(B);
+            print("kildi");
+            print(dud.GetComponent<Person>());
+            print(A.Combine(B));
+            print("www");
+            dud.GetComponent<Person>().SetDNA(A.Combine(B));
+            print("ok");
             dud.Initialize();
             dud.InformParents();
             LayOut();
@@ -140,6 +152,26 @@ public class TreeScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             LayOut();
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            /*if (chosen == null || d == null) return;
+            if (d.ghost) return;
+            if (chosen == d) return;
+            GameObject gho = GameObject.Instantiate(ghost);
+            gho.transform.position = chosen.transform.position;
+            gho.GetComponent<DudeScript>().id = running++;
+            DudeScript dud = gho.GetComponent<DudeScript>();
+            dud.parents = new List<GameObject> { chosen.gameObject, d.gameObject };
+
+            DNA A = chosen.GetComponent<Person>().GetDNA();
+            DNA B = d.GetComponent<Person>().GetDNA();
+            dud.GetComponent<Person>().SetDNA(A.Combine(B));
+
+            dud.Initialize();
+            dud.InformParents();
+            LayOut();*/
         }
     }
 
@@ -229,7 +261,7 @@ public class TreeScript : MonoBehaviour
     }
 
     // we 
-    public List<float> CalculateUnderOLD(GameObject dude)
+    /*public List<float> CalculateUnderOLD(GameObject dude)
     {
         filibuster += 1;
         if (filibuster > 100)
@@ -340,48 +372,64 @@ public class TreeScript : MonoBehaviour
             {
                 print(dud.req[l]);
             }
-        }*/
+        }*
 
         return dud.req;
-    }
+    }*/
 
-    public List<float> CalculateUnder(GameObject dude)
+    public void CalculateUnder(GameObject dude)
     {
         filibuster += 1;
         if (filibuster > 100)
         {
             print("recur?");
-            return new List<float>();
+            return; // new List<float>();
         }
 
         DudeScript dud = dude.GetComponent<DudeScript>();
         List<GameObject> children = dud.children;
         if (children.Count == 0)
         {
-            dud.req = new List<float> { 1 };
-            return dud.req;
+            dud.reql = new List<float> { 0.5f };
+            dud.reqr = new List<float> { 0.5f };
+            return;
         }
         dud.OrderChildren();
-        List<List<float>> childreqs = new List<List<float>>();
+        List<List<float>> childreqls = new List<List<float>>();
+        List<List<float>> childreqrs = new List<List<float>>();
         for (int l = 0; l < dud.children.Count; l++)
         {
-            childreqs.Add(CalculateUnder(dud.children[l]));
-        }
-
-        // find uniform separtion s that works, it's
-        // s >= max sep(i, j) /| i - j | over all pairs
-        // where sep(i, j) is max on all levels the sum of widths
-        float s = 0;
-        if (dud.children.Count >= 1)
-        {
-            for (int k = 0; k < dud.children.Count; k++)
+            //dud.children[i].GetComponent<DudeScript>().FixPrimary();
+            if (dud.children[l].GetComponent<DudeScript>().IsPrimaryParent(dud))
             {
-                for (int j = k + 1; j < dud.children.Count; j++)
-                {
-                    s = Mathf.Max(s, MinSep(childreqs[k], childreqs[j]) / (j - k));
-                }
+                CalculateUnder(dud.children[l]);
+                childreqls.Add(dud.children[l].GetComponent<DudeScript>().reql);
+                childreqrs.Add(dud.children[l].GetComponent<DudeScript>().reqr);
+            }
+            else
+            {
+                childreqls.Add(new List<float> { 0.5f });
+                childreqrs.Add(new List<float> { 0.5f });
             }
         }
+
+        // find leftmost possible positions of children instead of just s
+        List<float> childpositions = new List<float> { 0 };
+
+        if (dud.children.Count >= 1)
+        {
+            for (int k = 1; k < dud.children.Count; k++)
+            {
+                float minpos = 0;
+                for (int j = 0; j < k; j++)
+                {
+                    minpos = Mathf.Max(minpos, childpositions[j] + MinSep(childreqrs[j], childreqls[k]));
+                    // s = Mathf.Max(s, MinSep(childreqrs[k], childreqls[j]) / (j - k));
+                }
+                childpositions.Add(minpos);
+            }
+        }
+        if (childpositions.Count != children.Count) print("not my thing!");
 
         // the dude is now always 0
         dud.wantx = 0;
@@ -407,23 +455,30 @@ public class TreeScript : MonoBehaviour
         // leftmostsup is where we would put the leftmost up going
         // if we put the leftmost child at 0
         // we will actually move leftmostsup to DUDELEFTING though!
+        // ^^^^^ what is this about??
         float trans = 10000;
         foreach (DudeScript spouses in dud.childrenbyspouse.Keys)
         {
             float summa = 0; // sum of children's horizontal positions
-            foreach (DudeScript child in dud.childrenbyspouse[spouses])
+            /*foreach (DudeScript child in dud.childrenbyspouse[spouses])
             {
-                summa += s * curri;
+                summa += childpositions[curri]; //s * curri;
                 curri += 1;
-            }
-            dud.spousetoup[spouses] = summa / dud.childrenbyspouse[spouses].Count;
+            }    */
+            int num = dud.childrenbyspouse[spouses].Count;
+            //summa += dud.childrenbyspouse[spouses][0] + dud.childrenbyspouse[spouses][ - 1];
+            summa = childpositions[curri] + childpositions[curri + num-1];
+            curri += num;
+            dud.spousetoup[spouses] = summa / 2; //dud.childrenbyspouse[spouses].Count;
             if (trans == 10000) trans = DUDELEFTING - dud.spousetoup[spouses]; // at first upping, we set trans
             dud.spousetoup[spouses] = dud.spousetoup[spouses] + trans; //leftmostsup + DUDELEFTING;
         }
+        if (Mathf.Abs(dud.spousetoup[dud.spouses[0]] - DUDELEFTING) > 0.0001f) print("lbeeeed");
 
         for (int c = 0; c < dud.children.Count; c++)
         {
-            dud.childtox[dud.children[c].GetComponent<DudeScript>()] = trans + c * s;
+            childpositions[c] += trans;
+            dud.childtox[dud.children[c].GetComponent<DudeScript>()] = childpositions[c]; //c * s;
         }
 
         // now we know child positions and up positions...
@@ -439,28 +494,36 @@ public class TreeScript : MonoBehaviour
         }
 
         //float firstlevwid = Mathf.Max(Mathf.Abs(dud.wantx), Mathf.Abs(dud.spousetox[dud.spouses[dud.spouses.Count - 1]])) + FIRSTLEVEWIDADD;
+        //print("killi" + dud.spouses.Count.ToString());
+        //print("billi" + dud.children.Count.ToString());
         float firstlevwid = Mathf.Abs(dud.spousetox[dud.spouses[dud.spouses.Count - 1]]) + FIRSTLEVEWIDADD;
 
-        dud.req = new List<float> { firstlevwid };
+        dud.reql = new List<float> { FIRSTLEVEWIDADD };
+        dud.reqr = new List<float> { firstlevwid };
         int i = 0;
         int checke = 0;
         while (true)
         {
             // print("kimmo");
-            float max = 0;
+            float maxl = 0;
+            float maxr = 0;
+            bool did = false;
             for (int t = 0; t < dud.children.Count; t++)
             {
-                if (i < childreqs[t].Count)
+                if (i < childreqls[t].Count)
                 {
-                    float w = childreqs[t][i]; // width of this child
-                    float left = trans + s * t - w;
-                    float right = trans + s * t + w;
-                    max = Mathf.Max(max, Mathf.Abs(left) + 1);
-                    max = Mathf.Max(max, Mathf.Abs(right) + 1);
+                    did = true;
+                    float wl = childreqls[t][i]; // width of this child
+                    float wr = childreqrs[t][i]; // width of this child
+                    float left = childpositions[t] - wl;
+                    float right = childpositions[t] - wr;
+                    maxl = Mathf.Max(maxl, -left - 0.5f);
+                    maxr = Mathf.Max(maxr, right + 0.5f);
                 }
             }
-            if (max == 0) break;
-            dud.req.Add(max);
+            if (!did) break;
+            dud.reql.Add(maxl);
+            dud.reqr.Add(maxr);
             checke += 1;
             if (checke > 100)
             {
@@ -479,7 +542,7 @@ public class TreeScript : MonoBehaviour
             }
         }*/
 
-        return dud.req;
+            return; // dud.req;
     }
 
     float MinSep(List<float> a, List<float> b)
@@ -487,9 +550,9 @@ public class TreeScript : MonoBehaviour
         float max = 0; // max over levels
         for (int i = 0; i < Mathf.Min(a.Count, b.Count); i++)
         {
-            max = Mathf.Max(max, a[i] + b[i]);
+            max = Mathf.Max(max, a[i] + b[i] + CHILDSEPA);
         }
-        return max + 1;
+        return max;
     }
 
     // mark dudes for our use
