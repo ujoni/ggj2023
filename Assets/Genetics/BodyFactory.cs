@@ -1,7 +1,3 @@
-using System;
-using System.Threading;
-using Unity.Burst;
-using Unity.VisualScripting;
 using static GeneData;
 
 public static class BodyFactory

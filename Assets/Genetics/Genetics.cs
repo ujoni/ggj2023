@@ -1,12 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using TMPro;
-using TMPro.SpriteAssetUtilities;
-using UnityEditor.MPE;
 using UnityEngine;
-using UnityEngine.Rendering;
 using static GeneData;
 
 public class GeneAllele
@@ -220,7 +215,7 @@ public class DNA
     // if the roll is a success, a random Gene is chosen to be mutated.
     private static readonly int TOO_MANY_COUNTS_OF_PARENT = 3;
 
-    private readonly string id = System.Guid.NewGuid().ToString();
+    public readonly string id = System.Guid.NewGuid().ToString();
     private readonly List<Gene> genes;
     // contains unique identifiers of family members and how many times
     // those have appeared within the history of this DNA.
@@ -321,8 +316,10 @@ public class DNA
                 newDict.Add(entry.Key, entry.Value);
             }
         }
-        newDict.Add(dna1.id, 1);
-        newDict.Add(dna2.id, 1);
+        if (newDict.ContainsKey(dna1.id)) newDict[dna1.id] += 1;
+        else newDict.Add(dna1.id, 1);
+        if (newDict.ContainsKey(dna2.id)) newDict[dna2.id] += 1;
+        else newDict.Add(dna2.id, 1);
         return newDict;
     }
 

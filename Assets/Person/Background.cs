@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Background : DNAResolver
 {
     protected override int SelectComponent(DNA dna, int count)
