@@ -176,7 +176,11 @@ public class MouseListenerScript : MonoBehaviour
 
     public void BackClick()
     {
-        print("baackcli");
+        if (chosen)
+        {
+            // print("nullin");
+            // SetChosen(null);
+        }
     }
     public void TimePass()
     {
