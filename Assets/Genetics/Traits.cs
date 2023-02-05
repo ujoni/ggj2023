@@ -11,6 +11,10 @@ public class TraitRequirement
         this.category = category;
         this.phenotype = phenotype.ToUpper();
     }
+
+    public bool IsFilled(DNA dna) {
+        return (dna.GetGeneByCategory(this.category)?.GetPhenotype() ?? "") == this.phenotype;
+    }
 }
 
 public class Trait
@@ -29,7 +33,7 @@ public class Trait
     {
         return this.requirements
             // convert each requirement to a boolean - either it is filled or it is not
-            .Select(req => (dna.GetGeneByCategory(req.category)?.GetPhenotype() ?? "") == req.phenotype)
+            .Select(req => req.IsFilled(dna))
             // aggregate result
             .Aggregate((final, cur) => final && cur);
     }
