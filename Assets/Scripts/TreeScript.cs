@@ -48,6 +48,10 @@ public class TreeScript : MonoBehaviour
         {
             g.GetComponent<DudeScript>().InformParents();
         }
+        foreach (GameObject g in dudes)
+        {
+            g.GetComponent<DudeScript>().FixPrimary();
+        }
 
         filibuster = 0;
         CalculateUnder(root);
@@ -57,6 +61,11 @@ public class TreeScript : MonoBehaviour
         {
             d.GetComponent<DudeScript>().FixLiners();
         }
+        foreach (GameObject g in dudes)
+        {
+            g.GetComponent<DudeScript>().TimePassed(); 
+        }
+        //Debug.Break();
     }
     public void Update()
     {
@@ -103,6 +112,14 @@ public class TreeScript : MonoBehaviour
         {
             LayOut();
         }
+        if (Input.GetKey(KeyCode.T)) // for debug reasons
+        {
+            dudes = GameObject.FindGameObjectsWithTag("Dude");
+            foreach (GameObject g in dudes)
+            {
+                g.GetComponent<DudeScript>().TimePassed(); // this fixes ages of child ghosts that just swapped position...
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.N))
         {
@@ -125,8 +142,10 @@ public class TreeScript : MonoBehaviour
         }
     }
 
+    // once we know sizes, position dudes. side effect: mark family...
     public void PositionDudes(GameObject dude, Vector2 pos)
-    {
+    {;
+
         filibuster += 1;
         if (filibuster > 100)
         {
@@ -134,6 +153,10 @@ public class TreeScript : MonoBehaviour
             return;
         }
         DudeScript dud = dude.GetComponent<DudeScript>();
+
+
+        dud.family = true;
+
         //print(dud.id);
         dud.SetWantPos(pos + new Vector2(dud.wantx, 0));
         if (dud.wantx != 0) print("wrong");
@@ -467,7 +490,7 @@ public class TreeScript : MonoBehaviour
                     float wr = childreqrs[t][i]; // width of this child
                     float left = childpositions[t] - wl;
                     float right = childpositions[t] - wr;
-                    maxl = Mathf.Max(maxl, -left - 0.5f);
+                    maxl = Mathf.Max(maxl, -left + 0.5f);
                     maxr = Mathf.Max(maxr, right + 0.5f);
                 }
             }

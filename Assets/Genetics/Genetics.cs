@@ -334,4 +334,10 @@ public class DNA
     {
         return this.genes.Select(gene => gene.GetPhenotype()).Aggregate((whole, val) => whole + "-" + val);
     }
+
+    // or should this interpretation be done elsewhere?
+    public string ToAttributeText()
+    {
+        return "I do not have a clue, but the dna is " + ToString();
+    }
 }

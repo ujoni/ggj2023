@@ -46,4 +46,9 @@ public class Person : MonoBehaviour
             resolver.SetDNA(dna);
         }
     }
+
+    public void Copy(Person other)
+    {
+        dna = other.dna;
+    }
 }

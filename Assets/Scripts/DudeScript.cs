@@ -9,10 +9,14 @@ public class DudeScript : MonoBehaviour
     public TreeScript tree;
 
     public bool root;
+    public bool family;
+
 
     public bool ghost;
-    DudeScript real;
+    public DudeScript real;
     string ghosttype;
+
+    public int age;
 
 
     // the actual parents if exist
@@ -23,6 +27,10 @@ public class DudeScript : MonoBehaviour
     Color facecolor;
 
     Vector2 wantpos;
+
+    public bool CanReproduce;
+    public bool IsAlive;
+    public bool young;
 
     DudeScript activespouse;
 
@@ -57,7 +65,6 @@ public class DudeScript : MonoBehaviour
 
     public void Awake()
     {
-        print("awak"); 
 
         Initialize();
         
@@ -68,15 +75,65 @@ public class DudeScript : MonoBehaviour
         children = new List<GameObject>();
     }
 
+    public void TimePassed()
+    {
+        
+        age = listener.year - birthday;
+        //if (id == 12 && ghost) print("lipi" + age.ToString());
+        //if (id == 12 && ghost)  transform.Find("age").GetComponent<TextMeshPro>().text = "limerick";
+        //Debug.Break();
+
+        // if (ghost) age = real.age; // somehow disappears so yeah
+        string ag = age.ToString();
+        if (!IsAlive) ag = "";
+        transform.Find("age").GetComponent<TextMeshPro>().text = ag;
+        young = false;
+        if (age >= 15) CanReproduce = true;
+        else young = true;
+
+        if (age >= 45) CanReproduce = false;
+        if (age >= 70) IsAlive = false;
+        //print(GetComponent<Person>());
+        //print(GetComponent<Person>().GetDNA());
+        if (GetComponent<Person>().GetDNA() != null && !GetComponent<Person>().GetDNA().IsViable()) IsAlive = false;
+        if (!IsAlive)
+        {
+            transform.Find("Frame").GetComponent<SpriteRenderer>().color = Color.white;
+            transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.black;
+        }
+        else if (CanReproduce)
+        {
+            transform.Find("Frame").GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else
+        {
+            transform.Find("Frame").GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
+
+    public bool TooOldToBeSuitor()
+    {
+        return !IsAlive || (!CanReproduce && !young);
+    }
+
     public void Initialize()
     {
         if (initialized) return;
-        listener = GameObject.Find("MouseListenerSorta").GetComponent<MouseListenerScript>();
-        print("don");
+        
+        IsAlive = true;
+        
+        CanReproduce = false;
+
+        family = false;
+        listener = GameObject.Find("Cadence").GetComponent<MouseListenerScript>();
+        if (birthday == 0) birthday = listener.year;
+
+        transform.Find("age").GetComponent<TextMeshPro>().text = (listener.year - birthday).ToString();
+        // print("don");
         initialized = true;
 
         // facecolor = transform.Find("Face").GetComponent<SpriteRenderer>().color;
-        SetName(transform.name);
+        SetName("-"); // GetComponent<Person>().GetDNA().ToString());
         if (parents == null) parents = new List<GameObject>();
         FixPrimary();
         
@@ -98,6 +155,8 @@ public class DudeScript : MonoBehaviour
         childtox = new Dictionary<DudeScript, float>();
         childtoghost = new Dictionary<DudeScript, DudeScript>();
         spousetoliner = new Dictionary<DudeScript, LinerScript>();
+
+        TimePassed();
     }
 
     public void InformParents()
@@ -133,6 +192,10 @@ public class DudeScript : MonoBehaviour
 
     void OnMouseOver()
     {
+        if (Input.GetKey(KeyCode.Q))
+        {
+            
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (ghost && ghosttype == "child")
@@ -140,7 +203,9 @@ public class DudeScript : MonoBehaviour
                 if (!real.parents[1].GetComponent<DudeScript>().IsOrphan())
                 {
                     real.parents = new List<GameObject> { real.parents[1], real.parents[0] };
+                    //print(age);
                     tree.LayOut();
+                    //print(age);
                 }
             }
             listener.WasClicked(this, 0);
@@ -153,13 +218,14 @@ public class DudeScript : MonoBehaviour
 
     public void UnChoose()
     {
-        if (ghost) return;
-        //transform.Find("Face").GetComponent<SpriteRenderer>().color = facecolor;
+        if (ghost || !IsAlive) return;
+        transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.white;
     }
     public bool Choose()
     {
-        if (ghost) return false;
-        //transform.Find("Face").GetComponent<SpriteRenderer>().color = Color.green;
+        if (/*ghost || */ !IsAlive) return false;
+        if (ghost) real.Choose();
+        else transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.green;
         return true;
     }
 
@@ -303,7 +369,7 @@ public class DudeScript : MonoBehaviour
 
     public void FixLiners()
     {
-        print("corr linesr");
+        // print("corr linesr");
         // correctness of liners
         List<DudeScript> remove = new List<DudeScript>();
         foreach (DudeScript s in spousetoliner.Keys)
@@ -323,10 +389,10 @@ public class DudeScript : MonoBehaviour
         int idx = 0;
         foreach (DudeScript s in spouses)
         {
-            print("construct linerd");
+            // print("construct linerd");
             if (!spousetoliner.ContainsKey(s))
             {
-                print("construct liner");
+                //print("construct liner");
                 spousetoliner[s] = GameObject.Instantiate(liner).GetComponent<LinerScript>();
             }
 
@@ -346,7 +412,7 @@ public class DudeScript : MonoBehaviour
                     ls.children.Add(childtoghost[c].gameObject);
                 else
                 {
-                    print(c.id);
+                    //print(c.id);
                     ls.children.Add(c.gameObject);
                 }
             }
@@ -377,15 +443,24 @@ public class DudeScript : MonoBehaviour
         ghosttype = type;
         ghost = true;
         real = d;
-        SetName(d.transform.name + " ghost");
+        SetName(d.transform.name);
         if (copypos)
             transform.position = d.transform.position;
         id = d.id;
         birthday = d.birthday;
         // transform.Find("Face").GetComponent<SpriteRenderer>().sortingOrder = -1;
         //transform.Find("Face").GetComponent<SpriteRenderer>().color = Color.gray;
+        //transform.Find("Face").GetComponent<SpriteRenderer>().color = Color.gray;
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            SpriteRenderer sr = t.gameObject.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.25f);
+            }
+        }
 
-        
+        GetComponent<Person>().Copy(d.GetComponent<Person>());
     }
 
 
@@ -420,6 +495,14 @@ public class DudeScript : MonoBehaviour
         return null;
     }
 
+    public void ToLayer(int layer)
+    {
+        gameObject.layer = layer; // LayerMask.NameToLayer("Default");
+        foreach (Transform t in GetComponentsInChildren<Transform>() )
+        {
+            t.gameObject.layer = layer; //LayerMask.NameToLayer("Default");
+        }
+    }
     public void AddChild(GameObject child)
     {
         //print("adding " + child.GetComponent<DudeScript>().id.ToString() + " to " + id.ToString());
@@ -442,6 +525,8 @@ public class DudeScript : MonoBehaviour
 
     private void Update()
     {
+        TimePassed(); // I used to call this just when needed, but there was a ghost problem.
+
         if (ghost)
         {
             Vector3 pos1 = transform.position;
