@@ -47,7 +47,7 @@ public class GoalerScript : MonoBehaviour
 
     private void Update()
     {
-        if (Random.Range(0, 1000) == 0)
+        if (Random.Range(0, 5) == 0)
         {
             GameObject[] dudes = GameObject.FindGameObjectsWithTag("Dude");
             foreach (GameObject g in dudes)
