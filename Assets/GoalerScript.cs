@@ -33,7 +33,7 @@ public class GoalerScript : MonoBehaviour
             print("go" + gos.Count.ToString());
             GameObject namcopy = GameObject.Instantiate(nam, GameObject.Find("Canvas").transform);
             namcopy.transform.position = transform.position + running*Vector3.down;
-            running += 160;
+            running += 170;
             namcopy.GetComponent<TextMeshProUGUI>().text = gos[gos.Count-1].name;
             nams.Add(namcopy);
 
@@ -89,11 +89,7 @@ public class AbstractGoal
         }
         else if (num == 3)
         {
-            choices = new string[] { "President of US" };
-        }
-        else if (num == 4)
-        {
-            choices = new string[] { "Jesus in the flesh", "Zimbabwe Minister of State for Housing and Local Government" };
+            choices = new string[] { "President of US", "Jesus in the flesh", "Zimbabwe Minister of State for Housing and Local Government" };
         }
         name = choices[Random.Range(0, choices.Length)];
         traits = Traits.GetRandomGoalTraits(num);
