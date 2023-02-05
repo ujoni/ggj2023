@@ -20,7 +20,7 @@ public class LinerScript : MonoBehaviour
 
     private void Start()
     {
-        Random.InitState(parents[0].GetComponent<DudeScript>().id*10129 + parents[1].GetComponent<DudeScript>().id);
+        Random.InitState(parents[0].GetComponent<DudeScript>().id * 10129 + parents[1].GetComponent<DudeScript>().id);
         c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
         lr = GetComponent<LineRenderer>();
@@ -62,7 +62,7 @@ public class LinerScript : MonoBehaviour
             List<Vector3> poses = new List<Vector3>();
             for (int i = 0; i < children.Count; i++)
             {
-                poses.Add(children[i].transform.position + Vector3.up*dd/2);
+                poses.Add(children[i].transform.position + Vector3.up * dd / 2);
             }
             Hor.GetComponent<LineRenderer>().SetPositions(poses.ToArray());
 
@@ -80,7 +80,7 @@ public class LinerScript : MonoBehaviour
             {
                 LineRenderer llr = ToKidses[i].GetComponent<LineRenderer>();
                 llr.positionCount = 2;
-                llr.SetPositions(new Vector3[] { children[i].transform.position, children[i].transform.position + Vector3.up*dd/2 });
+                llr.SetPositions(new Vector3[] { children[i].transform.position, children[i].transform.position + Vector3.up * dd / 2 });
 
             }
             //public List<GameObject> ToKidses;
@@ -91,13 +91,13 @@ public class LinerScript : MonoBehaviour
     {
         foreach (GameObject go in ToKidses)
             Destroy(go);
-}
+    }
     void MakeCorrectNumberKidses()
     {
         while (ToKidses.Count < children.Count)
         {
             ToKidses.Add(GameObject.Instantiate(ToKids));
-            ToKidses[ToKidses.Count-1].GetComponent<LineRenderer>().startColor = c;
+            ToKidses[ToKidses.Count - 1].GetComponent<LineRenderer>().startColor = c;
             ToKidses[ToKidses.Count - 1].GetComponent<LineRenderer>().endColor = c;
             Hor.GetComponent<LineRenderer>().endColor = c;
         }
@@ -114,14 +114,15 @@ public class LinerScript : MonoBehaviour
         Vector3 curr = poses[0];
         for (int i = 1; i < poses.Count; i++)
         {
-            if (len + (poses[i] - curr).magnitude > midlen) {
+            if (len + (poses[i] - curr).magnitude > midlen)
+            {
                 // go midlen - len much along current
                 float left = midlen - len;
                 return curr + (poses[i] - curr).normalized * left;
             }
             len += (poses[i] - curr).magnitude;
             curr = poses[i];
-            
+
         }
         return Vector3.zero;
     }
