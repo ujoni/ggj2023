@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class GoalerScript : MonoBehaviour
 {
@@ -26,15 +26,16 @@ public class GoalerScript : MonoBehaviour
 
         nams = new List<GameObject>();
         attribses = new List<GameObject>();
+        var traitGoalCreator = new TraitGoalGenerator();
         foreach (int q in goalcomplexities)
         {
-            gos.Add(new AbstractGoal(q));
+            gos.Add(new AbstractGoal(traitGoalCreator, q));
             done.Add(false);
             print("go" + gos.Count.ToString());
             GameObject namcopy = GameObject.Instantiate(nam, GameObject.Find("Canvas").transform);
-            namcopy.transform.position = transform.position + running*Vector3.down;
+            namcopy.transform.position = transform.position + running * Vector3.down;
             running += 170;
-            namcopy.GetComponent<TextMeshProUGUI>().text = gos[gos.Count-1].name;
+            namcopy.GetComponent<TextMeshProUGUI>().text = gos[gos.Count - 1].name;
             nams.Add(namcopy);
 
             GameObject attribscopy = GameObject.Instantiate(attribs, GameObject.Find("Canvas").transform);
@@ -63,35 +64,35 @@ public class GoalerScript : MonoBehaviour
                         done[j] = true;
                         GameObject cm = GameObject.Instantiate(CheckMark, nams[j].transform.position, Quaternion.identity,
                             GameObject.Find("Canvas").transform);
-                        
+
                         break;
                     }
                 }
             }
         }
-    } 
+    }
 }
 
 public class AbstractGoal
 {
     public string name;
     public List<Trait> traits;
-    public AbstractGoal(int num)
+    public AbstractGoal(TraitGoalGenerator generator, int num)
     {
         string[] choices = new string[0];
         if (num == 1)
         {
-             choices = new string[] { "Some peasant" };
+            choices = new string[] { "General", "Lord", "Rich Person" };
         }
-        else if(num == 2)
+        else if (num == 2)
         {
-            choices = new string[] { "Vesa-Matti Loiri" };
+            choices = new string[] { "Great Singer" };
         }
         else if (num == 3)
         {
             choices = new string[] { "President of US", "Jesus in the flesh", "Zimbabwe Minister of State for Housing and Local Government" };
         }
         name = choices[Random.Range(0, choices.Length)];
-        traits = Traits.GetRandomGoalTraits(num);
+        traits = generator.GetRandomGoalTraits(num);
     }
 }

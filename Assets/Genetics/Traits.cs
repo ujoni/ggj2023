@@ -189,23 +189,6 @@ public static class Traits
         return traits.Where(trait => trait.PresentIn(dna)).ToList();
     }
 
-    public static List<Trait> GetRandomGoalTraits(int count = 2)
-    {
-        var realCount = count < 1 ? 2 : count;
-        var traitsWithTwoOrMoreReqs = traits.Where(trait => trait.requirements.Count > 1).ToList();
-        traitsWithTwoOrMoreReqs.Sort((trait1, trait2) => trait2.GetValue() - trait1.GetValue());
-
-        List<Trait> ret = new();
-        while (ret.Count < realCount)
-        {
-            // favors traits closer to the beginning
-            var index = (int)(Mathf.Pow(UnityEngine.Random.Range(0f, 1f), 2) * traitsWithTwoOrMoreReqs.Count);
-            var selected = traitsWithTwoOrMoreReqs[index];
-            if (ret.Any(trait => trait.SharesGeneCategory(selected))) continue;
-            ret.Add(selected);
-        }
-        return ret;
-    }
     public static string ToAttributeText(string end, List<Trait> traits)
     {
         string s = String.Join(", ", traits.Select(trait => trait.ToString()));
@@ -215,5 +198,32 @@ public static class Traits
     public static bool HasAllTraits(DNA dna, IEnumerable<Trait> traits)
     {
         return traits.All(trait => trait.PresentIn(dna));
+    }
+}
+
+public class TraitGoalGenerator
+{
+    private readonly List<Trait> potentialGoalTraits;
+
+    public TraitGoalGenerator()
+    {
+        potentialGoalTraits = Traits.traits.Where(trait => trait.requirements.Count > 1).ToList();
+    }
+
+    public List<Trait> GetRandomGoalTraits(int count = 2)
+    {
+        var realCount = count < 1 ? 2 : count;
+
+        List<Trait> ret = new();
+        while (ret.Count < realCount && this.potentialGoalTraits.Count > 0)
+        {
+            // favors traits closer to the beginning
+            var index = UnityEngine.Random.Range(0, potentialGoalTraits.Count);
+            var selected = potentialGoalTraits[index];
+            if (ret.Any(trait => trait.SharesGeneCategory(selected))) continue;
+            potentialGoalTraits.RemoveAt(index);
+            ret.Add(selected);
+        }
+        return ret;
     }
 }
