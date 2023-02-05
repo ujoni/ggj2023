@@ -314,7 +314,10 @@ public class DNA
         }
 
         // reduce existing values by 1
-        foreach (var key in newDict.Keys) newDict[key] -= 1;
+        Dictionary<string, int> nd = new Dictionary<string, int>();
+        foreach (var key in newDict.Keys) nd[key] = newDict[key]-1;
+        newDict = nd;
+
         var toRemove = newDict.Where(kvp => kvp.Value == 0).ToList();
         foreach (var entry in toRemove) newDict.Remove(entry.Key);
 
