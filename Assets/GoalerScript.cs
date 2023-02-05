@@ -52,7 +52,7 @@ public class GoalerScript : MonoBehaviour
             GameObject[] dudes = GameObject.FindGameObjectsWithTag("Dude");
             foreach (GameObject g in dudes)
             {
-                if (g.GetComponent<DudeScript>().ghost || g.GetComponent<DudeScript>().usedforpost) continue;
+                if (g.GetComponent<DudeScript>().ghost || g.GetComponent<DudeScript>().usedforpost || !g.GetComponent<DudeScript>().family) continue;
                 List<Trait> ts = Traits.GetTraits(g.GetComponent<Person>().GetDNA());
                 for (int j = 0; j < gos.Count; j++)
                 {

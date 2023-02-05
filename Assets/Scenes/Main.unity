@@ -1409,7 +1409,7 @@ MonoBehaviour:
   nam: {fileID: 310980932}
   attribs: {fileID: 2131512806}
   CheckMark: {fileID: 182567041}
-  goalcomplexities: 010000000200000003000000
+  goalcomplexities: 01000000020000000300000004000000
   done: 
   nams: []
   attribses: []
