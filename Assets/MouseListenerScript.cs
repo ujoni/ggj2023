@@ -68,6 +68,7 @@ public class MouseListenerScript : MonoBehaviour
             {
                 chosen.UnChoose();
                 SetChosen(null);
+                
             }
             if (d.ghost) d = d.real;
             if (d.Choose())
@@ -112,12 +113,14 @@ public class MouseListenerScript : MonoBehaviour
             GameObject.Find("chosen").GetComponent<TMP_Text>().text = d.GetComponent<Person>().GetDNA().ToString();
             GameObject.Find("chosenage").GetComponent<TMP_Text>().text = ExplainAge(d);
             GameObject.Find("attribs").GetComponent<TMP_Text>().text = d.GetComponent<Person>().GetDNA().ToAttributeText();
+            //Camera.main.GetComponent<SounderScript>().PlaySound("Sounders/di2");
         }
         else
         {
             GameObject.Find("chosen").GetComponent<TMP_Text>().text = "(nobody in focus)";
             GameObject.Find("chosenage").GetComponent<TMP_Text>().text = "";
             GameObject.Find("attribs").GetComponent<TMP_Text>().text = "";
+            Camera.main.GetComponent<SounderScript>().PlaySound("Sounders/di");
         }
         chosen = d;
     }
@@ -144,11 +147,13 @@ public class MouseListenerScript : MonoBehaviour
         print(dud.GetComponent<Person>());
         print(A.Combine(B));
         print("www");*/
-        dud.GetComponent<Person>().SetDNA(A.Combine(B));
+        dud.GetComponent<Person>().SetDNA(A); //.Combine(B));
         //print("ok");
         dud.Initialize();
         dud.InformParents();
         tree.LayOut();
+
+        Camera.main.GetComponent<SounderScript>().PlaySound("Sounders/mate");
 
         TimePass();
         
@@ -169,6 +174,10 @@ public class MouseListenerScript : MonoBehaviour
         }
     }
 
+    public void BackClick()
+    {
+        print("baackcli");
+    }
     public void TimePass()
     {
         GameObject.Find("SuitorsCamEtc").GetComponent<SuitorMaker>().MakeSuitors(suitorprob);
