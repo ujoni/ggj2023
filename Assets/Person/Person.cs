@@ -6,13 +6,22 @@ public class Person : MonoBehaviour
     public bool generateStartingDNA = false;
     private DNA dna;
     private DNAResolver[] dnaResolvers;
+
+    public string dnatext; // debug
+
     // Start is called before the first frame update
     void Awake()
     {
+        //print(gameObject.name);
         this.dnaResolvers = this.GetComponentsInChildren<DNAResolver>();
+        //print("a");
         if (this.generateStartingDNA)
         {
-            this.SetDNA(DNAFactory.CreateDNA(0, true));
+           //print("b");
+            DNA dn = DNAFactory.CreateDNA(0, true);
+            //print("c");
+            this.SetDNA(dn);
+            //print("d");
         }
 
     }
@@ -26,6 +35,12 @@ public class Person : MonoBehaviour
             this.SetDNA(DNAFactory.CreateDNA(0));
         }
         */
+
+        SetDNA(GetDNA());
+        dnatext = GetDNA().ToString();
+        //print("fvi");
+        //print("set" + dnatext);
+        
     }
 
     public DNA GetDNA()
@@ -35,20 +50,29 @@ public class Person : MonoBehaviour
 
     public void SetDNA(DNA dna)
     {
-        Debug.Log("SetDNA: " + dna.id + " " + dna);
+        //print("mallu!");
+        // Debug.Log("SetDNA: " + dna.id + " " + dna);
         if (!dna.IsViable())
         {
             throw new System.Exception("This fellow is dead, yo!");
         }
+        //print("killu");
         this.dna = dna;
         foreach (var resolver in this.dnaResolvers)
         {
+            //print("viulu" + resolver.ToString());
             resolver.SetDNA(dna);
         }
+        //print("paklu");
     }
 
     public void Copy(Person other)
     {
         dna = other.dna;
+    }
+
+    public void FixedUpdate()
+    {
+       
     }
 }

@@ -137,7 +137,7 @@ public class DudeScript : MonoBehaviour
         initialized = true;
 
         // facecolor = transform.Find("Face").GetComponent<SpriteRenderer>().color;
-        SetName("-"); // GetComponent<Person>().GetDNA().ToString());
+        SetName(gameObject.name); // GetComponent<Person>().GetDNA().ToString());
         if (parents == null) parents = new List<GameObject>();
         FixPrimary();
         
