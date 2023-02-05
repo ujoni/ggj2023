@@ -63,7 +63,7 @@ public class GeneAllele
 
     public bool IsDeadGeneAllele()
     {
-        return this.GetPhenotype() == GeneAllele.MUTATION_MARKER.ToString().ToUpper();
+        return this.GetPhenotype() == GeneAllele.MUTATION_MARKER.ToString();
     }
 
     private int GetRecessiveIndex()
@@ -115,12 +115,12 @@ public class GeneAllele
         {
             // we have aa or bb, which are represented by A or B
             // xx is represented as X 
-            if (a == b) return "" + Char.ToUpper(a);
+            if (a == b) return "" + a;
             // ab is represented as AB. if ax, then A (mutation is removed)
             string ret = "";
             if (a != GeneAllele.MUTATION_MARKER) ret += a;
             if (b != GeneAllele.MUTATION_MARKER) ret += b;
-            return ret.ToUpper();
+            return ret;
         }
 
         // we have only one dominant allele
@@ -206,14 +206,16 @@ public class Gene
 
 public class DNA
 {
-    // The minimum number of times person has had to provide their genes 
+    // how many generations the act of inheriting a dna is remembered
+    // if a child inherits dna from both parent,
+    private static readonly int GENERATIONAL_MEMORY = 4;
+
+    // The minimum accumulation of GENERATIONAL_MEMORY per ancestor
     // in order for a mutation roll to be taken.
     // mutation chance is 
-    //      count^2/sum_countributor_counts^2
-    // the more people partake in the DNA, the less is the chance. 
-    // the "roll" is performed for each participant that meets the limit.
-    // if the roll is a success, a random Gene is chosen to be mutated.
-    private static readonly int TOO_MANY_COUNTS_OF_PARENT = 3;
+    //      count^2/(GENERATIONAL_MEMORY + count)^2
+    //      
+    private static readonly int TOO_MANY_COUNTS_OF_PARENT = 5;
 
     public readonly string id = System.Guid.NewGuid().ToString();
     private readonly List<Gene> genes;
@@ -277,19 +279,12 @@ public class DNA
 
     private bool ShouldMutate()
     {
-        int total = 0;
-        foreach (var entry in this.inbreedingChart)
-        {
-            total += entry.Value;
-        }
-        int totalSquared = total * total;
-
         foreach (var entry in this.inbreedingChart)
         {
             var count = entry.Value;
-            if (entry.Value >= DNA.TOO_MANY_COUNTS_OF_PARENT)
+            if (count >= DNA.TOO_MANY_COUNTS_OF_PARENT)
             {
-                var mutationProbability = (count * count) / totalSquared;
+                var mutationProbability = Mathf.Pow(count, 2) / Mathf.Pow(count + DNA.GENERATIONAL_MEMORY, 2);
                 var chance = UnityEngine.Random.Range(0, 1);
                 Debug.Log("Mutation probability is " + mutationProbability + ", roll is " + chance);
                 if (chance < mutationProbability) return true;
@@ -301,6 +296,7 @@ public class DNA
     private static Dictionary<string, int> CombineInBreedingCharts(DNA dna1, DNA dna2)
     {
         Dictionary<string, int> newDict = new();
+        // combine old values
         foreach (var entry in dna1.inbreedingChart)
         {
             newDict.Add(entry.Key, entry.Value);
@@ -316,10 +312,16 @@ public class DNA
                 newDict.Add(entry.Key, entry.Value);
             }
         }
-        if (newDict.ContainsKey(dna1.id)) newDict[dna1.id] += 1;
-        else newDict.Add(dna1.id, 1);
-        if (newDict.ContainsKey(dna2.id)) newDict[dna2.id] += 1;
-        else newDict.Add(dna2.id, 1);
+
+        // reduce existing values by 1
+        foreach (var key in newDict.Keys) newDict[key] -= 1;
+        var toRemove = newDict.Where(kvp => kvp.Value == 0).ToList();
+        foreach (var entry in toRemove) newDict.Remove(entry.Key);
+
+        if (newDict.ContainsKey(dna1.id)) newDict[dna1.id] += DNA.GENERATIONAL_MEMORY;
+        else newDict.Add(dna1.id, DNA.GENERATIONAL_MEMORY);
+        if (newDict.ContainsKey(dna2.id)) newDict[dna2.id] += DNA.GENERATIONAL_MEMORY;
+        else newDict.Add(dna2.id, DNA.GENERATIONAL_MEMORY);
         return newDict;
     }
 
