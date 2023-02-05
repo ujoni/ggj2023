@@ -231,6 +231,7 @@ public class DudeScript : MonoBehaviour
     public bool Choose()
     {
         if (/*ghost || */ !IsAlive) return false;
+        if (!CanReproduce && !young) return false;
         if (ghost) real.Choose();
         else transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.green;
         return true;

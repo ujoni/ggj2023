@@ -52,12 +52,17 @@ public class Person : MonoBehaviour
     {
         //print("mallu!");
         // Debug.Log("SetDNA: " + dna.id + " " + dna);
-        if (false && !dna.IsViable())
-        {
-            throw new System.Exception("This fellow is dead, yo!");
-        }
+        
         //print("killu");
         this.dna = dna;
+
+        if (!dna.IsViable())
+        {
+            //thisdna  dna
+            //throw new System.Exception("This fellow is dead, yo!");
+            return;
+        }
+
         foreach (var resolver in this.dnaResolvers)
         {
             //print("viulu" + resolver.ToString());
