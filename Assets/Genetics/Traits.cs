@@ -9,7 +9,7 @@ public class TraitRequirement
     public TraitRequirement(GeneCategory category, string phenotype)
     {
         this.category = category;
-        this.phenotype = phenotype.ToUpper();
+        this.phenotype = phenotype;
     }
 
     public bool IsFilled(DNA dna) {
