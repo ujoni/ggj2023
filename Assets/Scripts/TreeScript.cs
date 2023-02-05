@@ -15,7 +15,7 @@ public class TreeScript : MonoBehaviour
     public const float DOWNADD = 4.5f;
     const float DUDELEFTING = 1;
     public const float SPOUSERIGHTING = 1;
-    public const float CHILDSEPA = 1.5f;
+    public const float CHILDSEPA = 0.5f;
 
     
 
@@ -165,7 +165,7 @@ public class TreeScript : MonoBehaviour
         {
             if (dud.spouses[i].IsOrphan() && !dud.spouses[i].HasOtherActiveSpouse(dud))
             { // printed 1 0 then 1 1
-                print("hem with " + dud.id.ToString() + " and " + i.ToString());
+                //print("hem with " + dud.id.ToString() + " and " + i.ToString());
                 dud.spouses[i].InformActiveSpouse(dud);
                 dud.spouses[i].SetWantPos(pos + new Vector2(dud.spousetox[dud.spouses[i]], 0));
 
@@ -178,10 +178,10 @@ public class TreeScript : MonoBehaviour
             }
             else
             {
-                print("hullll with " + dud.id.ToString() + " and " + i.ToString());
+                //print("hullll with " + dud.id.ToString() + " and " + i.ToString());
                 if (!dud.spousetoghost.ContainsKey(dud.spouses[i]))
                 {
-                    print("!ontian");
+                    //print("!ontian");
                     GameObject gho = GameObject.Instantiate(ghost);
                     dud.spousetoghost[dud.spouses[i]] = gho.GetComponent<DudeScript>();
                     gho.GetComponent<DudeScript>().GhostCopy(dud.spouses[i], true, "spouse");
@@ -189,7 +189,7 @@ public class TreeScript : MonoBehaviour
                 }
                 else
                 {
-                    print("yep ontian");
+                    //print("yep ontian");
                     GameObject gho = dud.spousetoghost[dud.spouses[i]].gameObject;
                     //dud.spousetoghost[dud.spouses[i]] = gho.GetComponent<DudeScript>();
                     gho.GetComponent<DudeScript>().GhostCopy(dud.spouses[i], false, "spouse");
@@ -352,6 +352,7 @@ public class TreeScript : MonoBehaviour
 
     public void CalculateUnder(GameObject dude)
     {
+
         /*filibuster += 1;
         if (filibuster > 100)
         {
@@ -359,12 +360,18 @@ public class TreeScript : MonoBehaviour
             return; // new List<float>();
         }*/
 
+        
         DudeScript dud = dude.GetComponent<DudeScript>();
+        if (dud.id == 1)
+        {
+            int a = 8;
+            print("kiss kllisilia");
+        }
         List<GameObject> children = dud.children;
         if (children.Count == 0)
         {
-            dud.reql = new List<float> { 0.5f };
-            dud.reqr = new List<float> { 0.5f };
+            dud.reql = new List<float> { 1 };
+            dud.reqr = new List<float> { 1 };
             return;
         }
         dud.OrderChildren();
@@ -381,10 +388,14 @@ public class TreeScript : MonoBehaviour
             }
             else
             {
-                childreqls.Add(new List<float> { 0.5f });
-                childreqrs.Add(new List<float> { 0.5f });
+                childreqls.Add(new List<float> { 1 });
+                childreqrs.Add(new List<float> { 1 });
             }
         }
+        if (dud.id == 1) print(childreqls.Count);
+        if (dud.id == 1) print(childreqls[0]);
+        if (dud.id == 1) print(childreqls.Count);
+        if (dud.id == 1) print("reqr" + childreqrs[0].ToString());
 
         // find leftmost possible positions of children instead of just s
         List<float> childpositions = new List<float> { 0 };
@@ -403,6 +414,8 @@ public class TreeScript : MonoBehaviour
             }
         }
         if (childpositions.Count != children.Count) print("not my thing!");
+
+        if (dud.id == 1) print(childpositions.Count);
 
         // the dude is now always 0
         dud.wantx = 0;
@@ -486,8 +499,8 @@ public class TreeScript : MonoBehaviour
         while (true)
         {
             // print("kimmo");
-            float maxl = 0;
-            float maxr = 0;
+            float maxl = -10000;
+            float maxr = -10000;
             bool did = false;
             for (int t = 0; t < dud.children.Count; t++)
             {
@@ -497,9 +510,9 @@ public class TreeScript : MonoBehaviour
                     float wl = childreqls[t][i]; // width of this child
                     float wr = childreqrs[t][i]; // width of this child
                     float left = childpositions[t] - wl;
-                    float right = childpositions[t] - wr;
-                    maxl = Mathf.Max(maxl, -left + 0.5f);
-                    maxr = Mathf.Max(maxr, right + 0.5f);
+                    float right = childpositions[t] + wr;
+                    maxl = Mathf.Max(maxl, -left);
+                    maxr = Mathf.Max(maxr, right);
                 }
             }
             if (!did) break;

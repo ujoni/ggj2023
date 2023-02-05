@@ -18,6 +18,10 @@ public class DudeScript : MonoBehaviour
 
     public int age;
 
+    public int THRESHOLD1 = 5; //15;
+    public int THRESHOLD2 = 10000; //45;
+    public int THRESHOLD3 = 10000; //70;
+
 
     // the actual parents if exist
     public List<GameObject> parents;
@@ -88,11 +92,11 @@ public class DudeScript : MonoBehaviour
         if (!IsAlive) ag = "";
         transform.Find("age").GetComponent<TextMeshPro>().text = ag;
         young = false;
-        if (age >= 15) CanReproduce = true;
+        if (age >= THRESHOLD1) CanReproduce = true;
         else young = true;
 
-        if (age >= 45) CanReproduce = false;
-        if (age >= 70) IsAlive = false;
+        if (age >= THRESHOLD2) CanReproduce = false;
+        if (age >= THRESHOLD3) IsAlive = false;
         //print(GetComponent<Person>());
         //print(GetComponent<Person>().GetDNA());
         if (GetComponent<Person>().GetDNA() != null && !GetComponent<Person>().GetDNA().IsViable()) IsAlive = false;
@@ -203,11 +207,10 @@ public class DudeScript : MonoBehaviour
                 if (!real.parents[1].GetComponent<DudeScript>().IsOrphan())
                 {
                     real.parents = new List<GameObject> { real.parents[1], real.parents[0] };
-                    //print(age);
-                    tree.LayOut();
-                    //print(age);
+                    
                 }
             }
+            tree.LayOut();
             listener.WasClicked(this, 0);
         }
         if (Input.GetMouseButtonDown(1))
@@ -215,6 +218,7 @@ public class DudeScript : MonoBehaviour
             listener.WasClicked(this, 1);
         }
     }
+
 
     public void UnChoose()
     {
