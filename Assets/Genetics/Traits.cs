@@ -123,10 +123,58 @@ public static class Traits
         new("Manipulative", new(GeneCategory.R_Logic_5, "b"), new(GeneCategory.R_Empathy_2, "D")),
         new("People-person", new(GeneCategory.R_Logic_5, "bc"), new(GeneCategory.R_Empathy_2, "e")),
         new("Competitive", new(GeneCategory.R_Logic_5, "cb"), new(GeneCategory.R_Physique_5, "FH")),
-        new("Ferocious", new(GeneCategory.R_Logic_5, "c"), new(GeneCategory.R_Physique_5, "H")),
-        new("Approachable", new(GeneCategory.R_Empathy_2, ""), new(GeneCategory.R_Physique_5, "")),
-        new("Forgettable", new(GeneCategory.R_Empathy_2, ""), new(GeneCategory.R_Physique_5, "")),
+        new("Ferocious", new(GeneCategory.R_Logic_5, "c"), new(GeneCategory.R_Physique_5, "g")),
+        new("Approachable", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.R_Physique_5, "H")),
+        new("Forgettable", new(GeneCategory.R_Empathy_2, "e"), new(GeneCategory.R_Physique_5, "HF")),
 
+        // complex traits, vital + optional
+        // LOGIC
+        new("Inventive", new(GeneCategory.R_Logic_5, "b"), new(GeneCategory.Creativity_4, "I")),
+        new("Dreamer", new(GeneCategory.R_Logic_5, "bc"), new(GeneCategory.Creativity_4, "JI")),
+        new("Adventurous", new(GeneCategory.R_Logic_5, "c"), new(GeneCategory.Creativity_4, "J")),
+        new("Brooding", new(GeneCategory.R_Logic_5, "A"), new(GeneCategory.Piety_5, "n")),
+        new("Leader", new(GeneCategory.R_Logic_5, "c"), new(GeneCategory.Piety_5, "np")),
+        new("Self-confident", new(GeneCategory.R_Logic_5, "b"), new(GeneCategory.Piety_5, "p")),
+        new("Mastermind", new(GeneCategory.R_Logic_5, "cd"), new(GeneCategory.Singularity_1, "u")),
+        // EMPATHY
+        new("Liberal", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Creativity_4, "I")),
+        new("Ingenious", new(GeneCategory.R_Empathy_2, "e"), new(GeneCategory.Creativity_4, "IJ")),
+        new("Emphatic", new(GeneCategory.R_Empathy_2, "e"), new(GeneCategory.Creativity_4, "JI")),
+        new("Calous", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Charisma_2, "l")),
+        new("Sensitive", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Quirks_10, "Q")),
+        new("Philanthropic", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Quirks_10, "r")),
+        new("Patriotic", new(GeneCategory.R_Empathy_2, "e"), new(GeneCategory.Quirks_10, "t")),
+        // PHYSIQUE
+        new("Flexible", new(GeneCategory.R_Physique_5, "F"), new(GeneCategory.Creativity_4, "JI")),
+        new("Rhythm-sense", new(GeneCategory.R_Physique_5, "FH"), new(GeneCategory.Creativity_4, "J")),
+        new("Mischievous", new(GeneCategory.R_Physique_5, "H"), new(GeneCategory.Creativity_4, "I")),
+        new("Timid", new(GeneCategory.R_Physique_5, "g"), new(GeneCategory.Charisma_2, "K")),
+        new("Friendly", new(GeneCategory.R_Physique_5, "HF"), new(GeneCategory.Charisma_2, "l")),
+        new("Conceited", new(GeneCategory.R_Physique_5, "F"), new(GeneCategory.Piety_5, "M")),
+        new("Selfish", new(GeneCategory.R_Physique_5, "FH"), new(GeneCategory.Piety_5, "n")),
+        new("Hard-working", new(GeneCategory.R_Physique_5, "H"), new(GeneCategory.Piety_5, "pn")),
+        new("Small-fingered", new(GeneCategory.R_Physique_5, "HF"), new(GeneCategory.Quirks_10, "rs")),
+        new("Tiny-eyed", new(GeneCategory.R_Physique_5, "F"), new(GeneCategory.Quirks_10, "s")),
+        new("Teethless", new(GeneCategory.R_Physique_5, "g"), new(GeneCategory.Quirks_10, "ts")),
+        new("Big boi", new(GeneCategory.R_Physique_5, "g"), new(GeneCategory.Singularity_1, "u")),
+
+        // complex traits, only optionals
+        // CREATIVITY x
+        new("Egoistical", new(GeneCategory.Creativity_4, "I"), new(GeneCategory.Charisma_2, "K")),
+        new("Popular", new(GeneCategory.Creativity_4, "J"), new(GeneCategory.Charisma_2, "l")),
+        new("Impulsive", new(GeneCategory.Creativity_4, "IJ"), new(GeneCategory.Piety_5, "M")),
+        new("Serious", new(GeneCategory.Creativity_4, "IJ"), new(GeneCategory.Piety_5, "n")),
+        new("Focused", new(GeneCategory.Creativity_4, "JI"), new(GeneCategory.Piety_5, "p")),
+        new("Six-fingered", new(GeneCategory.Creativity_4, "I"), new(GeneCategory.Quirks_10, "Q")),
+        new("Prescient", new(GeneCategory.Creativity_4, "I"), new(GeneCategory.Quirks_10, "r")),
+        new("Humorous", new(GeneCategory.Creativity_4, "JI"), new(GeneCategory.Quirks_10, "ts")),
+        // PIETY x
+        new("Convincing", new(GeneCategory.Piety_5, "M"), new(GeneCategory.Charisma_2, "K")),
+        new("Persuasive", new(GeneCategory.Piety_5, "n"), new(GeneCategory.Charisma_2, "l")),
+        new("Clairvoyant", new(GeneCategory.Piety_5, "M"), new(GeneCategory.Quirks_10, "sr")),
+        new("Believer", new(GeneCategory.Piety_5, "np"), new(GeneCategory.Quirks_10, "st")),
+        new("Third-eyed", new(GeneCategory.Piety_5, "pn"), new(GeneCategory.Quirks_10, "s")),
+        new("Divine", new(GeneCategory.Piety_5, "p"), new(GeneCategory.Singularity_1, "u")),
     };
 
     public static List<Trait> GetTraits(DNA dna)
