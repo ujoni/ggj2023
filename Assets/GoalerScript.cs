@@ -33,13 +33,13 @@ public class GoalerScript : MonoBehaviour
             print("go" + gos.Count.ToString());
             GameObject namcopy = GameObject.Instantiate(nam, GameObject.Find("Canvas").transform);
             namcopy.transform.position = transform.position + running*Vector3.down;
-            running += 140;
+            running += 160;
             namcopy.GetComponent<TextMeshProUGUI>().text = gos[gos.Count-1].name;
             nams.Add(namcopy);
 
             GameObject attribscopy = GameObject.Instantiate(attribs, GameObject.Find("Canvas").transform);
             attribscopy.transform.position = transform.position + running * Vector3.down;
-            running += 25 * gos[gos.Count - 1].traits.Count + 60;
+            running += 25 * gos[gos.Count - 1].traits.Count + 1;
             attribscopy.GetComponent<TextMeshProUGUI>().text = Traits.ToAttributeText("", gos[gos.Count - 1].traits);
             attribses.Add(attribscopy);
         }
@@ -57,11 +57,12 @@ public class GoalerScript : MonoBehaviour
                 for (int j = 0; j < gos.Count; j++)
                 {
                     if (done[j]) continue;
-                    if (false /* traits good */)
+                    if (Traits.HasAllTraits(g.GetComponent<Person>().GetDNA(), gos[j].traits) /* traits good */)
                     {
                         g.GetComponent<DudeScript>().usedforpost = true;
                         done[j] = true;
-                        GameObject cm = GameObject.Instantiate(CheckMark, attribses[j].transform.position, Quaternion.identity, GameObject.Find("Canvas").transform);
+                        GameObject cm = GameObject.Instantiate(CheckMark, nams[j].transform.position, Quaternion.identity,
+                            GameObject.Find("Canvas").transform);
                         
                         break;
                     }
