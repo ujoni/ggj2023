@@ -340,6 +340,15 @@ public class DNA
     // or should this interpretation be done elsewhere?
     public string ToAttributeText()
     {
-        return "I do not have a clue, but the dna is " + ToString();
+        return Traits.ToAttributeText(ToString(), Traits.GetTraits(this));
+        /*string s = "";
+        List<Trait> traits = Traits.GetTraits(this);
+        foreach (Trait t in traits)
+        {
+            s += t.ToString() + "\n";
+        }
+        return s + "\n(" + ToString() + ")";*/
     }
+
+
 }

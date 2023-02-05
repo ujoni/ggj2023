@@ -67,6 +67,8 @@ public class DudeScript : MonoBehaviour
     bool initialized;
     MouseListenerScript listener;
 
+    public bool usedforpost;
+
     public void Awake()
     {
 
@@ -123,7 +125,8 @@ public class DudeScript : MonoBehaviour
     public void Initialize()
     {
         if (initialized) return;
-        
+
+        usedforpost = false;
         IsAlive = true;
         
         CanReproduce = false;
