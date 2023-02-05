@@ -20,8 +20,11 @@ public class LinerScript : MonoBehaviour
 
     private void Start()
     {
+        Random.State kek = Random.state;
         Random.InitState(parents[0].GetComponent<DudeScript>().id * 10129 + parents[1].GetComponent<DudeScript>().id);
+        
         c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        Random.state = kek;
 
         lr = GetComponent<LineRenderer>();
         ToKidses = new List<GameObject>();
