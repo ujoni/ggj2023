@@ -199,4 +199,9 @@ public static class Traits
         }
         return ret;
     }
+
+    public static bool HasAllTraits(DNA dna, IEnumerable<Trait> traits)
+    {
+        return traits.All(trait => trait.PresentIn(dna));
+    }
 }
