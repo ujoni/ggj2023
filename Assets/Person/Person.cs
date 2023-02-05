@@ -52,7 +52,7 @@ public class Person : MonoBehaviour
     {
         //print("mallu!");
         // Debug.Log("SetDNA: " + dna.id + " " + dna);
-        if (!dna.IsViable())
+        if (false && !dna.IsViable())
         {
             throw new System.Exception("This fellow is dead, yo!");
         }
