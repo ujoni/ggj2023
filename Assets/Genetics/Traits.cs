@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using Mono.Cecil;
 using TMPro.SpriteAssetUtilities;
 using Unity.Burst;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
 using UnityEngine.UIElements;
@@ -206,13 +208,9 @@ public static class Traits
     }
     public static string ToAttributeText(string end, List<Trait> traits)
     {
-        string s = "";
-        foreach (Trait t in traits)
-        {
-            s += t.ToString() + "\n";
-        }
+        string s = String.Join(", ", traits.Select(trait => trait.ToString()));
         if (end == "") return s;
-        return s + "\n(" + end + ")";
+        return s + "\n\n(" + end + ")";
     }
     public static bool HasAllTraits(DNA dna, IEnumerable<Trait> traits)
     {

@@ -34,7 +34,7 @@ public class SuitorMaker : MonoBehaviour
                     suitors[i].transform.position = positions[i].transform.position;
                     suitors[i].GetComponent<DudeScript>().ToLayer(LayerMask.NameToLayer("Suitor"));
                     suitors[i].GetComponent<DudeScript>().SetWantPos(positions[i].transform.position);
-                    suitors[i].GetComponent<Person>().SetDNA(DNAFactory.CreateDNA(0));
+                    suitors[i].GetComponent<Person>().SetDNA(DNAFactory.CreateDNA(0, true));
                     suitors[i].GetComponent<DudeScript>().birthday =
                         GameObject.Find("Cadence").GetComponent<MouseListenerScript>().year - Random.Range(5, 20);
                 }
