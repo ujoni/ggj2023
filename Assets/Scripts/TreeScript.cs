@@ -146,12 +146,12 @@ public class TreeScript : MonoBehaviour
     public void PositionDudes(GameObject dude, Vector2 pos)
     {;
 
-        filibuster += 1;
+        /*filibuster += 1;
         if (filibuster > 100)
         {
             print("recur?");
             return;
-        }
+        }*/
         DudeScript dud = dude.GetComponent<DudeScript>();
 
 
@@ -352,12 +352,12 @@ public class TreeScript : MonoBehaviour
 
     public void CalculateUnder(GameObject dude)
     {
-        filibuster += 1;
+        /*filibuster += 1;
         if (filibuster > 100)
         {
             print("recur?");
             return; // new List<float>();
-        }
+        }*/
 
         DudeScript dud = dude.GetComponent<DudeScript>();
         List<GameObject> children = dud.children;
@@ -470,6 +470,14 @@ public class TreeScript : MonoBehaviour
         //print("killi" + dud.spouses.Count.ToString());
         //print("billi" + dud.children.Count.ToString());
         float firstlevwid = Mathf.Abs(dud.spousetox[dud.spouses[dud.spouses.Count - 1]]) + FIRSTLEVEWIDADD;
+
+        for (int s = 1; s < dud.spouses.Count; s++)
+        {
+            if (dud.spousetox[dud.spouses[s]] < dud.spousetox[dud.spouses[s - 1]])
+            {
+                Debug.Break(); // print("tht would explin lot");
+            }
+        }
 
         dud.reql = new List<float> { FIRSTLEVEWIDADD };
         dud.reqr = new List<float> { firstlevwid };

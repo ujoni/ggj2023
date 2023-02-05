@@ -2239,6 +2239,7 @@ MonoBehaviour:
   YearsPerGenerationMin: 4
   YearsPerGenerationMax: 10
   MatingsPerGeneration: 1
+  suitorprob: 1
   ghost: {fileID: 0}
   tree: {fileID: 0}
 --- !u!4 &1550929170
