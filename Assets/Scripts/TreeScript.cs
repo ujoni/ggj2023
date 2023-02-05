@@ -362,11 +362,11 @@ public class TreeScript : MonoBehaviour
 
         
         DudeScript dud = dude.GetComponent<DudeScript>();
-        if (dud.id == 1)
+        /*if (dud.id == 1)
         {
             int a = 8;
             print("kiss kllisilia");
-        }
+        }*/
         List<GameObject> children = dud.children;
         if (children.Count == 0)
         {
@@ -392,10 +392,10 @@ public class TreeScript : MonoBehaviour
                 childreqrs.Add(new List<float> { 1 });
             }
         }
-        if (dud.id == 1) print(childreqls.Count);
+        /*if (dud.id == 1) print(childreqls.Count);
         if (dud.id == 1) print(childreqls[0]);
         if (dud.id == 1) print(childreqls.Count);
-        if (dud.id == 1) print("reqr" + childreqrs[0].ToString());
+        if (dud.id == 1) print("reqr" + childreqrs[0].ToString());*/
 
         // find leftmost possible positions of children instead of just s
         List<float> childpositions = new List<float> { 0 };
@@ -413,9 +413,9 @@ public class TreeScript : MonoBehaviour
                 childpositions.Add(minpos);
             }
         }
-        if (childpositions.Count != children.Count) print("not my thing!");
+        //if (childpositions.Count != children.Count) print("not my thing!");
 
-        if (dud.id == 1) print(childpositions.Count);
+       // if (dud.id == 1) print(childpositions.Count);
 
         // the dude is now always 0
         dud.wantx = 0;
