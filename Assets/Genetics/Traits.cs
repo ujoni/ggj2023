@@ -145,7 +145,7 @@ public static class Traits
         new("Liberal", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Creativity_4, "I")),
         new("Ingenious", new(GeneCategory.R_Empathy_2, "e"), new(GeneCategory.Creativity_4, "IJ")),
         new("Emphatic", new(GeneCategory.R_Empathy_2, "e"), new(GeneCategory.Creativity_4, "JI")),
-        new("Calous", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Charisma_2, "l")),
+        new("Callous", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Charisma_2, "l")),
         new("Sensitive", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Quirks_10, "Q")),
         new("Philanthropic", new(GeneCategory.R_Empathy_2, "D"), new(GeneCategory.Quirks_10, "r")),
         new("Patriotic", new(GeneCategory.R_Empathy_2, "e"), new(GeneCategory.Quirks_10, "t")),
