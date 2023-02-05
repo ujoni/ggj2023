@@ -17,10 +17,11 @@ public class TreeScript : MonoBehaviour
     public const float SPOUSERIGHTING = 1;
     public const float CHILDSEPA = 0.5f;
 
-    
+    public bool usedforpost;
 
     private void Start()
     {
+        usedforpost = false;
         dudes = GameObject.FindGameObjectsWithTag("Dude");
         foreach (GameObject g in dudes)
         {

@@ -147,7 +147,7 @@ public class MouseListenerScript : MonoBehaviour
         print(dud.GetComponent<Person>());
         print(A.Combine(B));
         print("www");*/
-        dud.GetComponent<Person>().SetDNA(A); //.Combine(B));
+        dud.GetComponent<Person>().SetDNA(A.Combine(B));
         //print("ok");
         dud.Initialize();
         dud.InformParents();

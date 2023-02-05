@@ -38,6 +38,11 @@ public class Trait
         this.requirements = new(requirements);
     }
 
+    public override string ToString()
+    {
+        return name;
+    }
+
     public bool PresentIn(DNA dna)
     {
         return this.requirements
@@ -150,5 +155,15 @@ public static class Traits
             ret.Add(selected);
         }
         return ret;
+    }
+    public static string ToAttributeText(string end, List<Trait> traits)
+    {
+        string s = "";
+        foreach (Trait t in traits)
+        {
+            s += t.ToString() + "\n";
+        }
+        if (end == "") return s;
+        return s + "\n(" + end + ")";
     }
 }
