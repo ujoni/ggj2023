@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.3, y: -6.904}
-  m_SizeDelta: {x: 2.165, y: 0.402}
+  m_AnchoredPosition: {x: 0.029, y: 4.172}
+  m_SizeDelta: {x: 1.456, y: 0.437}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &839820177
 MeshRenderer:
@@ -109,8 +109,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.5735915, y: 0, z: -0.6965039, w: 0}
+  m_margin: {x: 0.0043338537, y: 0, z: 0.0040115714, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -335,8 +335,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.3, y: -11.107}
-  m_SizeDelta: {x: 2.165, y: 1.313}
+  m_AnchoredPosition: {x: 0.051, y: -4.342}
+  m_SizeDelta: {x: 1.41, y: 0.429}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4019641085968691581
 MeshRenderer:
@@ -409,8 +409,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.5735915, y: 0, z: -0.6965039, w: 0.86881495}
+  m_margin: {x: -0.013179302, y: 0.35025764, z: 0.004011631, w: 0.48353148}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -1026,6 +1026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generateStartingDNA: 0
+  dnatext: 
 --- !u!114 &410041405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,6 +1058,7 @@ MonoBehaviour:
   desc: 0
   reql: []
   reqr: []
+  usedforpost: 0
 --- !u!61 &4206543609141496114
 BoxCollider2D:
   m_ObjectHideFlags: 0
