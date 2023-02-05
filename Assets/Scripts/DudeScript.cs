@@ -18,9 +18,9 @@ public class DudeScript : MonoBehaviour
 
     public int age;
 
-    public int THRESHOLD1 = 5; //15;
-    public int THRESHOLD2 = 10000; //45;
-    public int THRESHOLD3 = 10000; //70;
+    public const int THRESHOLD1 = 15;
+    public const int THRESHOLD2 = 55;
+    public const int THRESHOLD3 = 70;
 
 
     // the actual parents if exist
